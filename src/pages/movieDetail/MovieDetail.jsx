@@ -89,7 +89,7 @@ const MovieDetail = ({theme, loading, movie, label}) => {
                                                     variant='body1'
                                                     color={theme.palette.font.main}
                                                 >
-                                                    {genre.value}
+                                                    {genre.valuew}
                                                 </Typography>
                                             </li>
                                         ))
