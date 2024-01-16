@@ -1,0 +1,52 @@
+.main {
+    padding: 2rem;
+    min-height: 75vh;
+}
+
+.section {
+    padding: 2rem;
+}
+
+.subtitle {
+    font-style: italic;
+    opacity: 0.8;
+    margin: 2rem 0;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imgContainer {
+    width: 300px;
+    height: 450px;
+    display: flex;
+    align-items: center;
+}
+
+.imgContainer img {
+    width: 100%;
+}
+
+.li {
+    margin: 1rem 0;
+    opacity: 0.9;
+}
+
+.datos {
+    display: inline-block;
+}
+
+@media screen and (max-width: 450px) {
+    .rating {
+        flex-direction: column;
+    }
+}

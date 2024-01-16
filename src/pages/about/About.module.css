@@ -1,0 +1,17 @@
+.main {
+    padding: 2rem;
+    min-height: 75vh;
+}
+
+.section {
+    padding: 2rem;
+}
+
+.texto {
+    line-height: 2rem;
+    text-indent: 1rem;
+}
+
+.texto a {
+    font-weight: bold;
+}

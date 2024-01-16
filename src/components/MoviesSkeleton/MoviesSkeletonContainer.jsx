@@ -1,0 +1,86 @@
+import { Skeleton, Stack } from "@mui/material";
+import styles from './MoviesSkeleton.module.css';
+
+const MoviesSkeletonContainer = () => {
+    return (
+        <Stack
+            className={styles.container}
+            direction='row'
+        >
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+                        <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+                        <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+            <Skeleton
+                variant="rectangular"
+                className={styles.skeleton}
+                width={200}
+                height={300}
+            />
+        </Stack>
+    );
+};
+
+export default MoviesSkeletonContainer;

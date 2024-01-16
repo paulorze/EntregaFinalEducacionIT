@@ -1,0 +1,11 @@
+.main {
+    padding: 2rem;
+    min-height: 75vh;
+}
+
+.stack {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
