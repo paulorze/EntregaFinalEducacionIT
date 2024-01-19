@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getMoviesPaginated } from "../../services/movies.service";
+import { getMoviesPaginated, getMoviesSearch } from "../../services/movies.service";
 import InfiniteLoaderComponent from "./InfiniteLoaderComponent";
+import { useSearchParams } from "react-router-dom";
+import { useTheme } from "@mui/material";
 
 const InfiniteLoaderComponentContainer = () => {
+    const theme = useTheme();
+    const [params, setParams] = useSearchParams();
+    const [search, setSearch] = useState("");
     const [currentPageToGet, setCurrentPageToGet] = useState(0);
     const [nextPage, setNextPage] = useState(true);
     const [loading, setLoading] = useState(true);
@@ -11,7 +16,12 @@ const InfiniteLoaderComponentContainer = () => {
     const fetchMoreData = async () => {
         try {
             setLoading(prevdata => true);
-            const data = await getMoviesPaginated(currentPageToGet);
+            let data;
+            if (search) {
+                data = await getMoviesSearch(search, currentPageToGet);
+            } else {
+                data = await getMoviesPaginated(currentPageToGet);
+            }
             setMoviesList(prevData => {
                 const resultArray = Array.from(new Set([...prevData, ...data.content].map(obj => obj.id))).map(id => [...prevData, ...data.content].find(obj => obj.id === id));
                 return resultArray;
@@ -23,6 +33,15 @@ const InfiniteLoaderComponentContainer = () => {
             console.log(e);
         };
     };
+
+    useEffect(()=> {
+        setSearch(prevData=>params.get('search'));
+    },[params])
+
+    useEffect(()=> {
+        setMoviesList(prevData=>[]);
+        fetchMoreData();
+    }, [search]);
 
     useEffect(()=> {
         fetchMoreData();
@@ -42,6 +61,8 @@ const InfiniteLoaderComponentContainer = () => {
 
     return (
         <InfiniteLoaderComponent
+            theme={theme}
+            search={search}
             moviesList={moviesList}
             loading={loading}
             lastBookElementRef={lastBookElementRef}

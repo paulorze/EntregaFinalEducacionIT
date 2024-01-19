@@ -8,3 +8,12 @@ export const getMoviesFromIMDBRepository = async (page) => {
         throw e;
     };
 };
+
+export const getGenresFromIMDBRepository = async () => {
+    try {
+        const res = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_IMDBKEY}&language=en-US`);
+        return res.data.genres;
+    } catch (e) {
+        throw e;
+    };
+};

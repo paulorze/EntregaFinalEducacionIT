@@ -1,5 +1,5 @@
-import GoogleIcon from '@mui/icons-material/Google';
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = ({theme, loginGoogle}) => {
     return (
@@ -20,16 +20,14 @@ const Login = ({theme, loginGoogle}) => {
                     maxWidth={'400px'}
                     margin={'0 auto'}
                 >
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        sx={{my:2}}
-                        endIcon={<GoogleIcon/>}
-                        onClick={loginGoogle}
-                        fullWidth
-                    >
-                        Iniciar Sesión con Google
-                    </Button>
+                    <GoogleLogin
+                        onSuccess={res => {
+                            loginGoogle(res);
+                        }}
+                        onError={e => {
+                            console.log(e)
+                        }}
+                    />
                 </Box>
             </Paper>
         </main>

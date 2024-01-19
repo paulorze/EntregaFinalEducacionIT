@@ -1,5 +1,5 @@
 import MovieIcon from '@mui/icons-material/Movie';
-import { Button, Drawer } from '@mui/material';
+import { Button } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
@@ -7,12 +7,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import ProfileWidgetContainer from './profileWidget/ProfileWidgetContainer';
-import SearchWidgetContainer from './searchNavWidget/SearchWidgetContainer';
 import styles from './Navbar.module.css';
 import NavbarDrawerContainer from './navbarDrawer/NavbarDrawerContainer';
+import ProfileWidgetContainer from './profileWidget/ProfileWidgetContainer';
+import SearchWidgetContainer from './searchNavWidget/SearchWidgetContainer';
 
-const Navbar = ({anchorElNav, handleOpenNavMenu, handleCloseNavMenu, anchorElUser, handleOpenUserMenu, handleCloseUserMenu, theme, role}) => {
+const Navbar = ({anchorElNav, handleOpenNavMenu, handleCloseNavMenu, anchorElUser, handleOpenUserMenu, handleCloseUserMenu, theme, role, logout}) => {
 
     return (
         <AppBar position="sticky" maxwidth='xl' sx={{flexGrow: 1, backgroundColor: theme.palette.primary.main, color:theme.palette.font.light}}>
@@ -121,31 +121,31 @@ const Navbar = ({anchorElNav, handleOpenNavMenu, handleCloseNavMenu, anchorElUse
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                     >
-                        <Link
-                            to={
+                            {
                                 (role !== undefined)
-                                    ? '/'
-                                    : 'login'
+                                    ?
+                                    <MenuItem onClick={()=>{
+                                        handleCloseUserMenu();
+                                        handleCloseNavMenu();
+                                        logout();
+                                    }}>
+                                        <Typography 
+                                            textAlign="center"
+                                        >
+                                            Cerrar Sesión
+                                        </Typography>
+                                    </MenuItem>  
+                                    : <Link
+                                        to='login'
+                                    >
+                                        <MenuItem onClick={()=>{
+                                            handleCloseUserMenu();
+                                            handleCloseNavMenu();
+                                        }}>
+                                            <Typography textAlign="center" color={theme.palette.font.main}>Iniciar Sesión</Typography>
+                                        </MenuItem>
+                                    </Link>
                             }
-                        >
-                            <MenuItem onClick={()=>{
-                                handleCloseUserMenu();
-                                handleCloseNavMenu();
-                            }}>
-                                {
-                                    (role !== undefined)
-                                        ? <Typography textAlign="center">Mi Perfil</Typography>
-                                        : <Typography textAlign="center">Iniciar Sesión</Typography>
-                                }
-                                
-                            </MenuItem>
-                        </Link>
-                        <MenuItem onClick={()=> {
-                            handleCloseUserMenu(); 
-                            handleCloseNavMenu();
-                        }}>
-                            <Typography textAlign="center">Cerrar Sesión</Typography>
-                        </MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>

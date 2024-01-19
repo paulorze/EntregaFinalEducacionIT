@@ -3,6 +3,7 @@ import MovieDetail from "./MovieDetail";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getMovieByID } from "../../services/movies.service";
+import { useSelector } from "react-redux";
 
 const MovieDetailContainer = () => {
     const theme = useTheme();
@@ -40,12 +41,25 @@ const MovieDetailContainer = () => {
             });
     }, [id]);
 
+    const admin = useSelector(store=>store.admin);
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpenModal = () => {
+        setOpenModal(prevData=>true);
+    };
+    const handleCloseModal = ()=> {
+        setOpenModal(prevData=>false);
+    };
+
     return (
         <MovieDetail
             theme={theme}
             loading={loading}
             movie={movie}
             label={label}
+            admin={admin}
+            openModal={openModal}
+            handleOpenModal={handleOpenModal}
+            handleCloseModal={handleCloseModal}
         />
     );
 };

@@ -1,50 +1,6 @@
-import { createMovieFromIMDBRepository, getMovieByIDRepository, getMoviesPaginatedRepository, getMoviesRepository } from "../repository/movies.repository";
-import { getMoviesFromIMDB } from "./imdb.service";
+import { createMovieFromIMDBRepository, createMovieRepository, getMovieByIDRepository, getMoviesPaginatedRepository, getMoviesRepository, getMoviesSearchRepository, updateMovieRepository } from "../repository/movies.repository";
 
-export const createDatabase = async () => {
-    const res1 = await getMoviesFromIMDB(1);
-    res1.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-    const res2 = await getMoviesFromIMDB(2);
-    res2.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-    const res3 = await getMoviesFromIMDB(3);
-    res3.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-    const res4 = await getMoviesFromIMDB(4);
-    res4.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-    const res5 = await getMoviesFromIMDB(5);
-    res5.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-    const res6 = await getMoviesFromIMDB(6);
-    res6.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-    const res7 = await getMoviesFromIMDB(7);
-    res7.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-    const res8 = await getMoviesFromIMDB(8);
-    res8.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-    const res9 = await getMoviesFromIMDB(9);
-    res9.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-    const res10 = await getMoviesFromIMDB(10);
-    res10.forEach(movie => {
-        createMovieFromIMDB(movie);
-    });
-};
-
-export const createMovieFromIMDB = async (movie) => {
+export const createMovieFromIMDB = async (token, movie) => {
     const movieDTO = {
         id : movie.id,
         adult: movie.adult,
@@ -62,9 +18,17 @@ export const createMovieFromIMDB = async (movie) => {
         voteCount: movie.vote_count
     }
     try {
-        await createMovieFromIMDBRepository(movieDTO)
+        await createMovieFromIMDBRepository(token, movieDTO)
     } catch (e) {
-        console.log(e);
+        throw e;
+    };
+};
+
+export const getMoviesSearch = async (param, page) => {
+    try {
+        const res = await getMoviesSearchRepository(param, page);
+        return res.data;
+    } catch (e) {
         throw e;
     };
 };
@@ -74,7 +38,6 @@ export const getMovies = async () => {
         const res = await getMoviesRepository();
         return res;
     } catch (e) {
-        console.log(e)
         throw e;
     };
 };
@@ -96,6 +59,23 @@ export const getMovieByID = async (id) => {
         throw e;
     };
 };
+
+export const createMovie = async (movie, token) => {
+    try {
+        await createMovieRepository(movie, token);
+    } catch (e) {
+        throw e;
+    };
+};
+
+export const updateMovie = async (movie, id, token) => {
+    try {
+        await updateMovieRepository(movie, id, token);
+    } catch (e) {
+        throw e;
+    };
+};
+
 
 const template = async () => {
     try {

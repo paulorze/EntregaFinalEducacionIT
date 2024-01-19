@@ -18,7 +18,7 @@ const SearchWidgetContainer = () => {
     };
 
     const searchStore = () => {
-        navigate('/store'+parametroBusqueda);
+        navigate('/'+parametroBusqueda);
     };
 
     return (

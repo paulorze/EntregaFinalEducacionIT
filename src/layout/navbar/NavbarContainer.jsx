@@ -1,14 +1,16 @@
 import { useTheme } from "@mui/material";
 import { useState } from 'react';
 import Navbar from "./Navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetUser } from "../../redux/userSlice";
+import { resetAdmin } from "../../redux/adminSlice";
 
 const NavbarContainer = ()=> {
     const theme = useTheme();
 
     // ESTO CORRESPONDE AL USUARIO AUTENTICADO
     const userData = useSelector(store=>store.userData)
-    const rolAdmin = import.meta.env.VITE_ADMINKEY;
+    const dispatcher = useDispatch();
 
     // ESTO CORRESPONDE AL MENU RESPONSIVO DESPLEGABLE
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -28,6 +30,11 @@ const NavbarContainer = ()=> {
         setAnchorElUser(null);
     };
     
+    const logout = () => {
+        dispatcher(resetUser());
+        dispatcher(resetAdmin());
+    };
+
     return  (
         <Navbar
             anchorElNav = {anchorElNav}
@@ -38,7 +45,7 @@ const NavbarContainer = ()=> {
             handleCloseUserMenu = {handleCloseUserMenu}
             theme = {theme}
             role={userData?.role}
-            rolAdmin={rolAdmin}
+            logout={logout}
         />
     );
 };

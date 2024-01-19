@@ -1,30 +1,32 @@
 import { useTheme } from '@mui/material';
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/userSlice';
+import { getAuthentication } from '../../services/authentication.service';
+import { createUser } from '../../services/user.services';
 import Login from './Login';
+import { setAdmin } from '../../redux/adminSlice';
 
 const LoginContainer = () => {
     const theme = useTheme();
-    const [ googleAuth, setGoogleAuth ] = useState(undefined);
-    const userData = useSelector(store=>store.userData);
     const dispatcher = useDispatch();
-    const navigate = useNavigate();
-    console.log(userData)
 
-    const loginGoogle = useGoogleLogin({
-        onSuccess: (codeResponse) => {setGoogleAuth(data => codeResponse)},
-        onError: (error) => console.log('Login Failed:', error)
-    });
-    
-    // useEffect(()=> {
-    //     if (userData !== null)  {
-    //         navigate('/')
-    //     };
-    // }, [userData]);
+    const loginGoogle = async (res) => {
+        try {
+            const data = jwtDecode(res.credential);
+            let newUserData = {email: data.email, img: data.picture, password: data.sub}
+            await createUser(newUserData);
+            const jwt = await getAuthentication(newUserData);
+            const decodedJwt = jwtDecode(jwt);
+            newUserData = {...newUserData, jwt: jwt, role: decodedJwt.authorities};
+            dispatcher(setUser(newUserData));
+            if (newUserData.role.includes("ROLE_ADMIN")) {
+                dispatcher(setAdmin());
+            };
+        } catch (error) {
+            console.log(error)
+        }
+    };
 
     return (
         <Login
