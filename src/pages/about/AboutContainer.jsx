@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 
 const AboutContainer = () => {
     const theme = useTheme();
-    const userData = useSelector(store=> store.userData);
-    const jwt = userData.jwt;
+    // const userData = useSelector(store=> store.userData);
+    // const jwt = userData.jwt;
 
     // useEffect(()=> {
     //     createDatabase(jwt);
